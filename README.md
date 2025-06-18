@@ -19,6 +19,9 @@ DevHub is a full-stack MERN + Next.js (TypeScript) application where developers 
 - NextAuth.js
 - Cloudinary (uploads)
 
+## You Can Access The Published Version Here
+https://devhub-lac.vercel.app/
+
 ## Getting Started
 ```bash
 git clone https://github.com/yourusername/devhub.git
