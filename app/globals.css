@@ -8,9 +8,29 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary-pink: #EC2E6A;
+  --color-primary-lightpink: #F8E8EE;
+  --color-primary-green: #4CC993;
+  --color-primary-blue: #019DD0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.primary-pink {
+  color: #EC2E6A;
+}
+
+.primary-lightpink {
+  color: #F8E8EE;
+}
+
+.primary-green {
+  color: #4CC993;
+}
+
+.primary-blue {
+  color: #019DD0;
 }

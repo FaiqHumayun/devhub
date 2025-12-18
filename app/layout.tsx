@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SessionProvider } from "../app/components/providers/SessionProvider";
+import Navbar from "./components/shared/Navbar";
 
 export const metadata: Metadata = {
   title: "DevHub",
-  description: "A full-stack developer community platform",
+  description: "A full-stack developer community platform.",
 };
 
 export default function RootLayout({
@@ -13,8 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
+      <body className="flex flex-col min-h-screen">
+        <SessionProvider>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
