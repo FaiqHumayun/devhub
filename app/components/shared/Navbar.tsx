@@ -4,49 +4,74 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { navLinks } from '../../contants';
+import Image from 'next/image';
+import logo from '../../../public/logo.png';
+import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-black shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-xl font-bold text-white">DevHub</span>
-            </Link>
-          </div>
+    <nav className="bg-black sticky top-0 z-50 p-5">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex justify-between items-center h-16">
+          <Link href="/">
+            <Image 
+              src={logo}
+              alt="DevHub Logo"
+              className="h-fit w-32 mr-2"
+            />
+          </Link>
 
-          <div className="hidden md:flex items-center space-x-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  pathname === link.href
-                    ? 'text-primary-pink bg-primary-lightpink'
-                    : 'text-white hover:text-primary-pink hover:bg-primary-lightpink'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          { session && 
+            <div className="hidden md:flex items-center space-x-4">
+              {
+                navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-3 py-2 rounded-md text-sm font-medium ${
+                      pathname === link.href
+                        ? 'text-primary-pink bg-primary-lightpink'
+                        : 'text-white hover:text-primary-pink hover:bg-primary-lightpink'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))
+              }
+            </div>
+          }
 
-          <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/auth/signin"
-              className="px-4 py-2 rounded-md text-sm font-medium text-white bg-primary-pink hover:bg-primary-green transition-colors"
-            >
-              Sign In
-            </Link>
-          </div>
+          { session ? 
+            (
+              <div className="hidden md:flex items-center space-x-4">
+                <button
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-primary-pink hover:bg-primary-green transition-colors cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              </div> 
+            )
+          : 
+            (
+              <div className="hidden md:flex items-center space-x-4">
+                  <Link
+                    href="/auth/signin"
+                    className="px-4 py-2 rounded-md text-sm font-medium text-white bg-primary-pink hover:bg-primary-green transition-colors cursor-pointer"
+                  >
+                    Sign In
+                  </Link>
+              </div>
+            )
+          }
 
           <div className="md:hidden flex items-center">
             <button
